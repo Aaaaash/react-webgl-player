@@ -18,6 +18,9 @@ declare module 'videocontext' {
     
     registerCallback(type: string, func: Function): void;
     unregisterCallback(func: Function): void;
+
+    start(time: number): boolean;
+    stop(time: number): boolean;
   }
 
   class VideoNode extends SourceNode {

@@ -17,8 +17,12 @@ class Player extends PureComponent<PlayerProps> {
   }
 
   public componentDidMount(): void {
-    const { source } = this.props;
+    const { source, size } = this.props;
+
     this.canvas = (document.getElementById(this.canvasId) as HTMLCanvasElement);
+    this.canvas.width = size.width;
+    this.canvas.height = size.height;
+
     this.ctx = new VideoContext(this.canvas);
     this.renderVideoBySource(source);
     this.ctx.registerCallback('ended', this.videocontextEnded);
@@ -33,10 +37,14 @@ class Player extends PureComponent<PlayerProps> {
   }
 
   public renderVideoBySource = (source: String[] | string) => {
-    const videoNode = this.ctx.video((source as string));
-    videoNode.registerCallback('load', this.videoNodeStateLoad);
-    videoNode.registerCallback('loaded', this.videoNodeStateLoaded);
-    videoNode.connect(this.ctx.destination);
+    if (typeof source === 'string') {
+      const videoNode = this.ctx.video(source, 0);
+      videoNode.start(0);
+      videoNode.stop(100);
+      videoNode.registerCallback('load', this.videoNodeStateLoad);
+      videoNode.registerCallback('loaded', this.videoNodeStateLoaded);
+      videoNode.connect(this.ctx.destination);
+    }
     this.ctx.play();
   }
 
