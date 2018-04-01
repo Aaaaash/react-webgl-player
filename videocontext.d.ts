@@ -5,7 +5,22 @@ declare module 'videocontext' {
     // todo
   }
 
-  class VideoNode {
+  class GraphNode {
+    // todo
+    public connect(targetNode: any): boolean;
+  }
+
+  class RenderGraph {
+    // todo
+  }
+  class SourceNode extends GraphNode {
+    constructor(src: string, gl: WebGLRenderingContext, renderGraph: RenderGraph, currentTime: number);
+    
+    registerCallback(type: string, func: Function): void;
+    unregisterCallback(func: Function): void;
+  }
+
+  class VideoNode extends SourceNode {
     // todo
   }
 
@@ -74,7 +89,7 @@ declare module 'videocontext' {
   
     pause(): boolean;
   
-    video(src: string, sourceOffset: number, preloadTime: number, videoElementAttributes: object): VideoNode;
+    video(src: string, sourceOffset?: number, preloadTime?: number, videoElementAttributes?: object): VideoNode;
   
     image(src: string, preloadTime: number, imageElementAttributes: object): ImageNode;
   

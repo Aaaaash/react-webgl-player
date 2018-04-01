@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "sakuraash",
   "license": "MIT",
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "@types/react": "^16.1.0",
     "@types/react-dom": "^16.0.4",
