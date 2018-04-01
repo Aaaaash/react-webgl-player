@@ -8,12 +8,22 @@
   "dependencies": {
     "@types/react": "^16.1.0",
     "@types/react-dom": "^16.0.4",
+    "@types/storybook__react": "^3.0.7",
+    "awesome-typescript-loader": "^4.0.1",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
+    "storybook": "^1.0.0",
     "typescript": "^2.8.1",
     "videocontext": "^0.51.7"
   },
   "scripts": {
-    "build": "tsc src/index.tsx --jsx react --outDir lib"
+    "storybook": "start-storybook -p 3344",
+    "build": "tsc src/index.tsx --jsx react --outDir lib",
+    "build-storybook": "build-storybook"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^3.4.0",
+    "@storybook/addon-links": "^3.4.0",
+    "@storybook/react": "^3.4.0"
   }
 }
