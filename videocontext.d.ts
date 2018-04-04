@@ -83,7 +83,14 @@ declare module "videocontext" {
   }
 
   class ImageNode extends SourceNode {
-    constructor(src: string | SourceElement, gl: WebGLRenderingContext, renderGraph: RenderGraph, currentTime: number, preloadTime: number, attribites: object);
+    constructor(
+      src: string | SourceElement,
+      gl: WebGLRenderingContext,
+      renderGraph: RenderGraph,
+      currentTime: number,
+      preloadTime: number,
+      attribites: object
+    );
 
     elementURL(): string;
 
@@ -94,7 +101,13 @@ declare module "videocontext" {
   }
 
   class CanvasNode extends SourceNode {
-    constructor(src: string | SourceElement, gl: WebGLRenderingContext, renderGraph: RenderGraph, currentTime: number, preloadTime: number);
+    constructor(
+      src: string | SourceElement,
+      gl: WebGLRenderingContext,
+      renderGraph: RenderGraph,
+      currentTime: number,
+      preloadTime: number
+    );
 
     _load(): void;
     _unload(): void;
