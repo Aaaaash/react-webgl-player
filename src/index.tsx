@@ -4,6 +4,7 @@ import VideoContext from 'videocontext';
 
 import {
   PlayerProps,
+  SourceVideo,
 } from './interface';
 
 class Player extends PureComponent<PlayerProps> {
@@ -17,14 +18,14 @@ class Player extends PureComponent<PlayerProps> {
   }
 
   public componentDidMount(): void {
-    const { source, size } = this.props;
+    const { sources, size } = this.props;
 
     this.canvas = (document.getElementById(this.canvasId) as HTMLCanvasElement);
     this.canvas.width = size.width;
     this.canvas.height = size.height;
 
     this.ctx = new VideoContext(this.canvas);
-    this.renderVideoBySource(source);
+    this.renderVideoBySource(sources);
     this.ctx.registerCallback('ended', this.videocontextEnded);
   }
 
@@ -36,16 +37,31 @@ class Player extends PureComponent<PlayerProps> {
     console.log('loaded');
   }
 
-  public renderVideoBySource = (source: String[] | string) => {
-    if (typeof source === 'string') {
-      const videoNode = this.ctx.video(source, 0);
+  public renderVideoBySource = (sources: SourceVideo[] | string) => {
+    if (typeof sources === 'string') {
+      const videoNode = this.ctx.video(sources, 0);
       videoNode.start(0);
       videoNode.stop(100);
       videoNode.registerCallback('load', this.videoNodeStateLoad);
       videoNode.registerCallback('loaded', this.videoNodeStateLoaded);
       videoNode.connect(this.ctx.destination);
+    } else {
+      sources.forEach((source) => {
+        this.connectVideoNodeToDestination(source.src, source.start, source.end);
+      });
     }
-    this.ctx.play();
+    if (this.props.autoPlay) {
+      this.ctx.play();
+    }
+  }
+
+  private connectVideoNodeToDestination = (url: string, start: number = 0, end: number = 100) => {
+    const videoNode = this.ctx.video(url, 0);
+    videoNode.start(start);
+    videoNode.stop(end);
+    videoNode.registerCallback('load', this.videoNodeStateLoad);
+    videoNode.registerCallback('loaded', this.videoNodeStateLoaded);
+    videoNode.connect(this.ctx.destination);
   }
 
   public videocontextEnded(): void {
