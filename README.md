@@ -1,7 +1,7 @@
 #React-WebGL-Player
 React player component based on webgl.
 
-## example
+## run example
 ```bash
 npm install
 npm run storybook
