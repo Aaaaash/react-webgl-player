@@ -29,24 +29,47 @@ class Player extends PureComponent<PlayerProps> {
     this.ctx.registerCallback('ended', this.videocontextEnded);
   }
 
-  public videoNodeStateLoad = () => {
-    console.log('load');
+  public videoStateLoad = (): void => {
+    this.props.onload && this.props.onload();
   }
 
-  public videoNodeStateLoaded = () => {
-    console.log('loaded');
+  public videoStateLoaded = () => {
+    this.props.onloaded && this.props.onloaded();
   }
 
-  public renderVideoBySource = (sources: SourceVideo[] | string) => {
+  public videodestroy = () => {
+    this.props.ondestroy && this.props.ondestroy();
+  }
+
+  public videoSeek = (node: any, time: number) => {
+    this.props.onseek && this.props.onseek(time);
+  }
+
+  public videoPlay = () => {
+    this.props.onplay && this.props.onplay();
+  }
+
+  public videoDurationChange = (node: any, duration: number) => {
+    this.props.ondurationchange && this.props.ondurationchange(duration);
+  }
+
+  public videoRender = (node: any, currentTime: number) => {
+    this.props.onrender && this.props.onrender(currentTime);
+  }
+
+  public videoEnded = () => {
+    this.props.onended && this.props.onended();
+  }
+
+  public videoError = () => {
+    this.props.onerror && this.props.onerror();
+  }
+
+  public renderVideoBySource = (sources: SourceVideo[] | string): void => {
     if (typeof sources === 'string') {
-      const videoNode = this.ctx.video(sources, 0);
-      videoNode.start(0);
-      videoNode.stop(100);
-      videoNode.registerCallback('load', this.videoNodeStateLoad);
-      videoNode.registerCallback('loaded', this.videoNodeStateLoaded);
-      videoNode.connect(this.ctx.destination);
+      this.connectVideoNodeToDestination(sources);
     } else {
-      sources.forEach((source) => {
+      sources.forEach((source: SourceVideo) => {
         this.connectVideoNodeToDestination(source.src, source.start, source.end);
       });
     }
@@ -55,12 +78,19 @@ class Player extends PureComponent<PlayerProps> {
     }
   }
 
-  private connectVideoNodeToDestination = (url: string, start: number = 0, end: number = 100) => {
+  private connectVideoNodeToDestination = (url: string, start: number = 0, end: number = Infinity): void => {
     const videoNode = this.ctx.video(url, 0);
     videoNode.start(start);
     videoNode.stop(end);
-    videoNode.registerCallback('load', this.videoNodeStateLoad);
-    videoNode.registerCallback('loaded', this.videoNodeStateLoaded);
+    videoNode.registerCallback('load', this.videoStateLoad);
+    videoNode.registerCallback('loaded', this.videoStateLoaded);
+    videoNode.registerCallback('durationchange', this.videoDurationChange);
+    videoNode.registerCallback('play', this.videoPlay);
+    videoNode.registerCallback('render', this.videoRender);
+    videoNode.registerCallback('seek', this.videoSeek);
+    videoNode.registerCallback('destory', this.videodestroy);
+    videoNode.registerCallback('ended', this.videoEnded);
+    videoNode.registerCallback('error', this.videoError);
     videoNode.connect(this.ctx.destination);
   }
 
@@ -68,7 +98,7 @@ class Player extends PureComponent<PlayerProps> {
 
   }
 
-  public resetPlayer = () => {
+  public resetPlayer = (): void => {
     this.ctx.reset();
   }
 

@@ -3,14 +3,19 @@ import { storiesOf } from "@storybook/react";
 
 import Player from "../src";
 
-const url =
-  "https://qncdn.miaopai.com/stream/Yxz6L2SApvDcE19wF6yxGhdbhR6ynJtCAJSjVQ___16_0_1522675670.mp4?ssig=0be11c10685ce65e7e507a171e2b448c&time_stamp=1522811457149";
+const url = 'https://cloud-clip-out.oss-cn-hangzhou.aliyuncs.com/video/49908875-9691-422a-ac80-bd3de781753f/ba30c36b-703a-49fc-a545-a32071dac274.mp4?=1522890603';
 
 storiesOf("Player", module).add("with text", () => (
   <Player
-    sources={[{ src: url, start: 0, end: 10 }]}
+    sources={url}
     canvasId="myWebGl-player"
     size={{ width: 800, height: 480 }}
-    // autoPlay
+    autoPlay
+    onrender={(val: number) => {
+      console.log(val);
+    }}
+    ondurationchange={(duration) => {
+      console.log(duration);
+    }}
   />
 ));

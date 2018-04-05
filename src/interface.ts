@@ -11,8 +11,17 @@ export type SourceVideo = {
 
 export interface PlayerProps {
   sources: SourceVideo[] | string;
-  canvasId?: string;
   size: CanvasSize;
+
+  onload?: () => void;
+  onloaded?: () => void;
+  ondestroy?: () => void;
+  onseek?: (time: number) => void;
+  onplay?: () => void;
+  ondurationchange?: (duration: number) => void;
+  onended?: () => void;
+  onrender?: (currentTime: number) => void;
+  onerror?: () => void;
+  canvasId?: string;
   autoPlay?: boolean;
 }
-
