@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PureComponent } from 'react';
-import VideoContext from 'videocontext';
+import VideoContext, { SourceNode } from 'videocontext';
 
 import {
   PlayerProps,
@@ -41,7 +41,7 @@ class Player extends PureComponent<PlayerProps> {
     this.props.ondestroy && this.props.ondestroy();
   }
 
-  public videoSeek = (node: any, time: number) => {
+  public videoSeek = (node: SourceNode, time: number) => {
     this.props.onseek && this.props.onseek(time);
   }
 
@@ -49,11 +49,11 @@ class Player extends PureComponent<PlayerProps> {
     this.props.onplay && this.props.onplay();
   }
 
-  public videoDurationChange = (node: any, duration: number) => {
+  public videoDurationChange = (node: SourceNode, duration: number) => {
     this.props.ondurationchange && this.props.ondurationchange(duration);
   }
 
-  public videoRender = (node: any, currentTime: number) => {
+  public videoRender = (node: SourceNode, currentTime: number) => {
     this.props.onrender && this.props.onrender(currentTime);
   }
 

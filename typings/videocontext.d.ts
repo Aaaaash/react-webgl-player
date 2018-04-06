@@ -1,17 +1,51 @@
-declare module "videocontext" {
-  class DestinationNode {
+// Type definitions for videocontext
+// Project: videocontext
+// Definitions by: sakuraash <https://github.com/SakuraAsh>
+// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+
+declare module 'videocontext' {
+  export type SourceElement = HTMLCanvasElement | HTMLImageElement | HTMLVideoElement;
+
+  export type WebglContextAttributes = {
+    preserveDrawingBuffer: boolean;
+    alpha: boolean;
+  };
+
+  export type Options = {
+    preserveDrawingBuffer: boolean;
+    manualUpdate: boolean;
+    endOnLastSourceEnd: boolean;
+    useVideoElementCache: boolean;
+    videoElementCacheSize: number;
+    webglContextAttributes: WebglContextAttributes;
+  };
+
+  export class DestinationNode {
     // todo
   }
 
-  class GraphNode {
+  export class RenderGraph {
+    // todo
+  }
+
+  export class EffectNode {
+    // todo
+  }
+
+  export class CompositingNode {
+    // todo
+  }
+
+  export class TransitionNode {
+    // todo
+  }
+
+ export class GraphNode {
     // todo
     public connect(targetNode: any): boolean;
   }
 
-  class RenderGraph {
-    // todo
-  }
-  class SourceNode extends GraphNode {
+  export class SourceNode extends GraphNode {
     constructor(
       src: string | SourceElement,
       gl: WebGLRenderingContext,
@@ -52,7 +86,7 @@ declare module "videocontext" {
     destroy(): void;
   }
 
-  class VideoNode extends SourceNode {
+  export class VideoNode extends SourceNode {
     constructor(
       src: string | SourceElement,
       gl: WebGLRenderingContext,
@@ -82,7 +116,7 @@ declare module "videocontext" {
     destroy(): void;
   }
 
-  class ImageNode extends SourceNode {
+  export class ImageNode extends SourceNode {
     constructor(
       src: string | SourceElement,
       gl: WebGLRenderingContext,
@@ -100,7 +134,7 @@ declare module "videocontext" {
     _update(currentTime: number): boolean;
   }
 
-  class CanvasNode extends SourceNode {
+  export class CanvasNode extends SourceNode {
     constructor(
       src: string | SourceElement,
       gl: WebGLRenderingContext,
@@ -115,35 +149,7 @@ declare module "videocontext" {
     _update(currentTime: number): boolean;
   }
 
-  class EffectNode {
-    // todo
-  }
-
-  class CompositingNode {
-    // todo
-  }
-
-  class TransitionNode {
-    // todo
-  }
-
-  type SourceElement = HTMLCanvasElement | HTMLImageElement | HTMLVideoElement;
-
-  type WebglContextAttributes = {
-    preserveDrawingBuffer: boolean;
-    alpha: boolean;
-  };
-
-  type Options = {
-    preserveDrawingBuffer: boolean;
-    manualUpdate: boolean;
-    endOnLastSourceEnd: boolean;
-    useVideoElementCache: boolean;
-    videoElementCacheSize: number;
-    webglContextAttributes: WebglContextAttributes;
-  };
-
-  class VideoContext {
+  export class VideoContext {
     constructor(canvas: HTMLCanvasElement, options?: Options);
 
     registerTimelineCallback(
@@ -203,5 +209,5 @@ declare module "videocontext" {
     snapshot(): VideoContext;
   }
 
-  export = VideoContext;
+  export default VideoContext;
 }
