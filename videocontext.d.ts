@@ -3,8 +3,11 @@
 // Definitions by: sakuraash <https://github.com/SakuraAsh>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-declare module 'videocontext' {
-  export type SourceElement = HTMLCanvasElement | HTMLImageElement | HTMLVideoElement;
+declare module "videocontext" {
+  export type SourceElement =
+    | HTMLCanvasElement
+    | HTMLImageElement
+    | HTMLVideoElement;
 
   export type WebglContextAttributes = {
     preserveDrawingBuffer: boolean;
