@@ -40,7 +40,7 @@ declare module 'videocontext' {
     // todo
   }
 
- export class GraphNode {
+  export class GraphNode {
     // todo
     public connect(targetNode: any): boolean;
   }
@@ -149,7 +149,7 @@ declare module 'videocontext' {
     _update(currentTime: number): boolean;
   }
 
-  export class VideoContext {
+  class VideoContext {
     constructor(canvas: HTMLCanvasElement, options?: Options);
 
     registerTimelineCallback(
@@ -168,16 +168,13 @@ declare module 'videocontext' {
 
     duration(): number;
 
-    currentTime(currentTime: number): void;
-    currentTime(): number;
+    currentTime: number;
 
     destination(): DestinationNode;
 
-    playbackRate(rate: number): void;
-    playbackRate(): number;
+    playbackRate: number;
 
-    volume(vol: number): void;
-    volume(): number;
+    volume: number;
 
     play(): boolean;
 

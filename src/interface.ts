@@ -24,4 +24,10 @@ export interface PlayerProps {
   onerror?: () => void;
   canvasId?: string;
   autoPlay?: boolean;
+  play?: boolean;
+  onPlaying?: (currentTime: number) => void;
+}
+
+export interface PlayerState {
+  play: boolean;
 }

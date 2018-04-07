@@ -5,16 +5,21 @@ import VideoContext, { SourceNode } from 'videocontext';
 import {
   PlayerProps,
   SourceVideo,
+  PlayerState,
 } from './interface';
 
 class Player extends PureComponent<PlayerProps> {
   canvasId: string;
   canvas: HTMLCanvasElement;
   ctx: VideoContext;
+  state: PlayerState;
 
   public constructor(props: PlayerProps) {
     super(props);
     this.canvasId = props.canvasId || 'webgl_player_canvas';
+    this.state = {
+      play: false,
+    };
   }
 
   public componentDidMount(): void {
@@ -27,6 +32,17 @@ class Player extends PureComponent<PlayerProps> {
     this.ctx = new VideoContext(this.canvas);
     this.renderVideoBySource(sources);
     this.ctx.registerCallback('ended', this.videocontextEnded);
+  }
+
+  public static getDerivedStateFromProps(nextProps: PlayerProps, prevState: any) {
+    if (nextProps.play !== prevState.play || nextProps.autoPlay) {
+      return { play: nextProps.play || nextProps.autoPlay };
+    }
+    return null;
+  }
+
+  public componentDidUpdate() {
+    this.state.play ? this.ctx.play() : this.ctx.pause();
   }
 
   public videoStateLoad = (): void => {
@@ -54,6 +70,7 @@ class Player extends PureComponent<PlayerProps> {
   }
 
   public videoRender = (node: SourceNode, currentTime: number) => {
+    this.drawVideo();
     this.props.onrender && this.props.onrender(currentTime);
   }
 
@@ -63,6 +80,16 @@ class Player extends PureComponent<PlayerProps> {
 
   public videoError = () => {
     this.props.onerror && this.props.onerror();
+  }
+
+  public currentTime = (time: number) => {
+    this.ctx.currentTime = time;
+  }
+
+  private drawVideo = () => {
+    if (this.state.play && this.props.onPlaying) {
+      this.props.onPlaying(this.ctx.currentTime);
+    }
   }
 
   public renderVideoBySource = (sources: SourceVideo[] | string): void => {
