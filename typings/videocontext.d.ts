@@ -23,6 +23,15 @@ declare module "videocontext" {
     webglContextAttributes: WebglContextAttributes;
   };
 
+  export type Definitions = {
+    title: string;
+    description: string;
+    vertexShader: string;
+    fragmentShader: string;
+    properties: any;
+    inputs: String[];
+  }
+
   export class DestinationNode {
     // todo
   }
@@ -198,11 +207,11 @@ declare module "videocontext" {
 
     canvas(canvas: HTMLCanvasElement): CanvasNode;
 
-    effect(definition: object): EffectNode;
+    effect(definition: Definitions): EffectNode;
 
-    compositor(definition: object): CompositingNode;
+    compositor(definition: Definitions): CompositingNode;
 
-    transition(definition: object): TransitionNode;
+    transition(definition: Definitions): TransitionNode;
 
     reset(): void;
 
